@@ -23,7 +23,7 @@ class Kmeans
 			change_flg = false
 			calcCenter
 			for i in 0..@feature_vector.length-1 do
-				c = updateCluster(@feature_vector[i]['point'])
+				c = getCluster(@feature_vector[i]['point'])
 				if c != @feature_vector[i]['cluster']
 					@feature_vector[i]['cluster'] = c
 					change_flg = true
@@ -56,7 +56,7 @@ class Kmeans
 		end
 	end
 
-	def updateCluster(_point)
+	def getCluster(_point)
 		min = Float::INFINITY
 		for i in 0..@num_cluster-1 do
 			d = calcDistance(_point, @center[i]['point'])
