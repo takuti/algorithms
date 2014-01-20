@@ -27,19 +27,19 @@ class BP
 	def doLearning
 		puts 'Start Learning...'
 
-		training_pattern = Array.new
-		supervisor_pattern = Array.new
+		training_data = Array.new
+		teacher_data = Array.new
 
 		open('data/6bit_symmetry.data').each do |line|
 			pattern = line.split(' ')
-			training_pattern << pattern[0]
-			supervisor_pattern << [pattern[1].to_i]
+			training_data << pattern[0]
+			teacher_data << [pattern[1].to_i]
 		end
-		p training_pattern
-		p supervisor_pattern
+		p training_data
+		p teacher_data
 
-		# training_pattern = ['100001', '001010', '110011', '001110', '000011']
-		# supervisor_pattern = [[1],[0],[1],[1],[1]]
+		# training_data = ['100001', '001010', '110011', '001110', '000011']
+		# teacher_data = [[1],[0],[1],[1],[1]]
 
 		epsilon = 0.1 # learning rate
 		alpha = 0.9 # momentum
@@ -53,21 +53,21 @@ class BP
 		# for x in 0..60 do
 			error = 0.0
 			epoch += 1
-			for n in 0..training_pattern.length-1 do
-				unit_out = estimateOutput(training_pattern[n])
+			for n in 0..training_data.length-1 do
+				unit_out = estimateOutput(training_data[n])
 
 				for i in 0..@num_output_units-1 do
-					error += 0.5*(unit_out['output'][i] - supervisor_pattern[n][i])*(unit_out['output'][i] - supervisor_pattern[n][i])
+					error += 0.5*(unit_out['output'][i] - teacher_data[n][i])*(unit_out['output'][i] - teacher_data[n][i])
 				end
 				# Calculate error propagation
 				## (11) d of output layer [k=m]
 				d2 = Array.new(@num_output_units)
 				for i in 0..@num_output_units-1 do
 					o = unit_out['output'][i]
-					y = supervisor_pattern[n][i]
+					y = teacher_data[n][i]
 					d2[i] = (o-y)*o*(1-o)
 				end
-				# puts "#{training_pattern[n]} (y = #{supervisor_pattern[n]}): \nd2 = #{d2}" if x==100
+				# puts "#{training_data[n]} (y = #{teacher_data[n]}): \nd2 = #{d2}" if x==100
 
 				## (10) d of hidden layer [k!=m]
 				d1 = Array.new(@num_hidden_units) {0.0}
@@ -108,11 +108,11 @@ class BP
 		puts "\n***** Connection weight of layer 2-3 *****\n#{@w2}"
 
 		# doTest
-		p estimateOutput(training_pattern[0])['output'][0]
-		p estimateOutput(training_pattern[1])['output'][0]
-		p estimateOutput(training_pattern[2])['output'][0]
-		p estimateOutput(training_pattern[3])['output'][0]
-		p estimateOutput(training_pattern[4])['output'][0]
+		p estimateOutput(training_data[0])['output'][0]
+		p estimateOutput(training_data[1])['output'][0]
+		p estimateOutput(training_data[2])['output'][0]
+		p estimateOutput(training_data[3])['output'][0]
+		p estimateOutput(training_data[4])['output'][0]
 	end
 
 	def doTest
