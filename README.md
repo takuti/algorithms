@@ -13,7 +13,7 @@ There are experimental implementations some useful method and algorithm.
 		- S. Araya, *"Jinkou Chinou Gairon(2nd Edition) [Introduction to Artificial Intelligence]"*, Kyoritsu Shuppan, pp. 121-124, 2004. (in Japanese)
 		- S. Asakawa, [Back Propagation(Lecture Handout)](http://www.cis.twcu.ac.jp/~asakawa/waseda2002/bp.pdf). (PDF, in Japanese)
 
-― tf-idf (tf_idf.rb)
+- tf-idf (tf_idf.rb)
 	- Calculate tf*idf value for each word of given Japanese documents.
 	- Noun will be index word. Other categories are ignored.
 	- Reference:
