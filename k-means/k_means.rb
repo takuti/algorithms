@@ -7,7 +7,7 @@ class Kmeans
 
     @feature_vector = Array.new
 
-    open('../_data/iris.data').each do |p|
+    open('../@data/iris.data').each do |p|
       point_array = p.split(',')
       @feature_vector << {'point' => [point_array[0].to_f, point_array[1].to_f, point_array[2].to_f, point_array[3].to_f], 'cluster' => (rand 0..(@num_cluster-1))}
     end
