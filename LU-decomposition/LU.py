@@ -43,12 +43,18 @@ def solve(LU, b):
 
   return x
 
+def det(LU):
+  d = 1
+  for i in range(np.shape(LU)[0]):
+    d *= LU[i][i]
+  return d
+
 if __name__ == '__main__':
   A = np.array([[1, 2, 3, 4],
                 [2, 2, 3, 4],
                 [3, 3, 3, 4],
                 [4, 4, 4, 4]], dtype='float64')
   b = np.array([1.234, 2.234, 3.334, 4.444], dtype='float64')
-
   print solve(decompose(A), b)
+  print det(decompose(A))
 
