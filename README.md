@@ -11,4 +11,4 @@ This repository has implementations of many algorithms in Computer Science.
   - BP(Back Propagation) Neural Network
   - k-means
   - tf-idf
-	- Linear Regression
+  - Linear Regression
