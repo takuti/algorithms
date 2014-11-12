@@ -2,7 +2,7 @@
 
 import numpy as np
 
-def gradient_descend(data, alpha=0.3, theta=np.array([0,0])):
+def gradient_descend(data, alpha=0.3):
   def f(t, x):
     return t[0] + t[1] * x
 
@@ -13,6 +13,7 @@ def gradient_descend(data, alpha=0.3, theta=np.array([0,0])):
 
   eps = 1e-7
   m = len(data)
+  theta = np.zeros([m, 1])
   while True:
     # Simultaneously update
     tmp0 = theta[0] - alpha * sum([(f(theta, data[i][0]) - data[i][1]) for i in range(m)]) / m
