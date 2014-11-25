@@ -4,6 +4,7 @@ import copy
 
 import selection
 import insertion
+import shell
 import merge
 
 def input_data():
@@ -40,4 +41,5 @@ if __name__ == '__main__':
 
   print 'Selection: ' + str(selection.sort(copy.deepcopy(A), order))
   print 'Insertion: ' + str(insertion.sort(copy.deepcopy(A), order))
+  print '    Shell: ' + str(shell.sort(copy.deepcopy(A), order))
   print '    Merge: ' + str(merge.sort(copy.deepcopy(A), 0, len(A)-1, order))
