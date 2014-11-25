@@ -1,4 +1,21 @@
+""" INSERTION SORT
+
+[algorithm]
+Pick-up an element one-by-one from the head, and insert the element to appropriate position
+
+[order]
+O(n^2)
+"""
+
 def sort(A, compare):
+  """
+  [arguments]
+  A -- Given array
+  compare -- lambda function for comparison of two values (ascend or descend)
+
+  [return]
+  Sorted array
+  """
   for j in range(1, len(A)):
     key = A[j]
     i = j - 1
