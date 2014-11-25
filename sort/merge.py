@@ -1,4 +1,25 @@
+""" MERGE SORT
+
+[algorithm] (recursive)
+1. Divide given array
+2. Sort each divided array
+3. Merge sorted array
+
+[order]
+O(nlogn)
+"""
+
 def sort(A, l, r, compare):
+  """
+  [arguments]
+  A -- Given array
+  l -- Left boundary
+  r -- Right boundary
+  compare -- lambda function for comparison of two values (ascend or descend)
+
+  [return]
+  Sorted array
+  """
   def merge(m):
     n_l = m - l + 1
     n_r = r - m
