@@ -3,6 +3,9 @@
 [algorithm]
 Pick-up an element one-by-one from the head, and insert the element to appropriate position
 
++ Fast for almost sorted data
+- Slow for non-sorted data
+
 [order]
 O(n^2)
 """
