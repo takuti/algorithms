@@ -6,6 +6,7 @@ import selection
 import insertion
 import shell
 import merge
+import bogo
 
 def input_data():
   while True:
@@ -43,3 +44,4 @@ if __name__ == '__main__':
   print 'Insertion: ' + str(insertion.sort(copy.deepcopy(A), order))
   print '    Shell: ' + str(shell.sort(copy.deepcopy(A), order))
   print '    Merge: ' + str(merge.sort(copy.deepcopy(A), 0, len(A)-1, order))
+  print '     Bogo: ' + str(bogo.sort(copy.deepcopy(A), order))
