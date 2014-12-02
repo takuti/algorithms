@@ -37,6 +37,33 @@ def TF(_hash)
   tf
 end
 
+def TF_NATURAL(_hash)
+  tf = Hash.new
+  _hash.each do |tag,cnt|
+    tf[tag] = cnt
+  end
+  tf
+end
+
+def TF_LOG(_hash)
+  tf = Hash.new
+  _hash.each do |tag,cnt|
+    tf[tag] = 1.0 + Math.log10(cnt)
+  end
+  tf
+end
+
+def TF_AUGMENTED(_hash)
+  weight_k = 0.5
+  max = _hash.max { |a,b| a[1] <=> b[1] }[1] # get max value in _hash
+
+  tf = Hash.new
+  _hash.each do |tag,cnt|
+    tf[tag] = weight_k + (1-weight_k) * cnt / max
+  end
+  tf
+end
+
 ##############################################
 # Calc IDF value
 # Argument: _hash, _df, _n(num of documents)
