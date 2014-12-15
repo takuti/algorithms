@@ -14,7 +14,7 @@ def read_iris():
     l = l.split(',')
     X.append(map(float, l[:4]))
     label.append(l[4])
-  return X, label
+  return np.array(X), np.array(label)
 
 def main():
   X, label = read_iris()
