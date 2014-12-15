@@ -19,7 +19,12 @@ def read_iris():
 def main():
   X, label = read_iris()
   whitened = whiten(X) # normalize
-  centroid, alloc = kmeans2(whitened, k=3)
+  method = input('[0] minimize distortion k-means, [1] random initialize k-means > ')
+  if method == 0:
+    centroid, distortion = kmeans(whitened, k_or_guess=3)
+    alloc = vq(whitened, centroid)[0]
+  else:
+    centroid, alloc = kmeans2(whitened, k=3)
   c = [[] for i in range(3)] # k = 3
   for i in range(len(X)):
     c[alloc[i]].append(label[i])
