@@ -22,11 +22,10 @@ def gradient_descend(data, alpha=0.3):
     else: theta = [tmp0, tmp1]
   return theta
 
-def normal_equation(data):
-  x = data[:, 0:2]
-  y = data[:, 2][np.newaxis].T
+def normal_equation(X, y):
+  y = y[np.newaxis].T
 
-  return np.dot(np.dot(np.linalg.inv(np.dot(x.T, x)), x.T), y)
+  return np.dot(np.dot(np.linalg.inv(np.dot(X.T, X)), X.T), y)
 
 
 def main():
@@ -38,12 +37,17 @@ def main():
                    [ 2, 3.8]])
   theta = gradient_descend(data)
   print 'y = %f + %fx' % tuple(theta)
-  data = np.array([[1, -2, 1.4],
-                   [1, -1, 1.7],
-                   [1,  0, 2.7],
-                   [1,  1, 3.4],
-                   [1,  2, 3.8]])
-  theta = normal_equation(data)
+  X = np.array([[1, -2],
+                [1, -1],
+                [1,  0],
+                [1,  1],
+                [1,  2]])
+  y = np.array([[1.4],
+                [1.7],
+                [2.7],
+                [3.4],
+                [3.8]])
+  theta = normal_equation(X, y)
   print 'y = %f + %fx' % tuple(theta)
 
 
