@@ -7,7 +7,7 @@ def gradient_descend(X, y, alpha=0.3):
   m = len(X) # the number of data
 
   def f(t, x):
-    return t[0] * x[0] + t[1] * x[1]
+    return sum([t[j] * x[j] for j in range(n)])
 
   def J(t):
     # Squared error func: (f(x)-y)^2
