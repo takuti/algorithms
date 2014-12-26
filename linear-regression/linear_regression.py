@@ -3,7 +3,8 @@
 import numpy as np
 
 def gradient_descend(X, y, alpha=0.3):
-  m = len(X)
+  n = len(X[0]) # the number of features
+  m = len(X) # the number of data
 
   def f(t, x):
     return t[0] * x[0] + t[1] * x[1]
@@ -14,13 +15,14 @@ def gradient_descend(X, y, alpha=0.3):
     return s / (2.0 * m)
 
   eps = 1e-7
-  theta = np.zeros([len(X[0]), 1])
+  theta = np.zeros([n, 1])
   while True:
     # Simultaneously update
-    tmp0 = theta[0] - alpha * sum([(f(theta, X[i]) - y[i]) for i in range(m)]) / m
-    tmp1 = theta[1] - alpha * sum([(f(theta, X[i]) - y[i]) * X[i][1] for i in range(m)]) / m
-    if abs(J(theta) - J([tmp0, tmp1])) < eps: break
-    else: theta = [tmp0, tmp1]
+    tmp = np.zeros([n, 1])
+    for j in range(n):
+      tmp[j] = theta[j] - alpha * sum([(f(theta, X[i]) - y[i]) * X[i][j] for i in range(m)]) / m
+    if abs(J(theta) - J(tmp)) < eps: break
+    else: theta = tmp.copy()
   return theta
 
 def normal_equation(X, y):
