@@ -2,15 +2,15 @@
 head: sentinel cell
 """
 
-class List:
-  class Cell:
-    def __init__(self, x, prv=None, nxt=None):
-      self.key = x
-      self.prv = prv
-      self.nxt = nxt
+class Cell:
+  def __init__(self, x, prv=None, nxt=None):
+    self.key = x
+    self.prv = prv
+    self.nxt = nxt
 
+class List:
   def __init__(self):
-    self.head = List.Cell(None)
+    self.head = Cell(None)
     self.head.prv = self.head
     self.head.nxt = self.head
 
@@ -41,9 +41,9 @@ class List:
 if __name__ == '__main__':
   l = List()
   print l # [] (empty)
-  l.insert(l.Cell(1))
-  l.insert(l.Cell(2))
-  l.insert(l.Cell(3))
+  l.insert(Cell(1))
+  l.insert(Cell(2))
+  l.insert(Cell(3))
   print l # [3, 2, 1]
   x = l.search(2)
   l.delete(x)
