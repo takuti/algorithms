@@ -1,13 +1,15 @@
 """ hash
-hash functions
-- int(k * m) if 0 <= k <= 1
-- k % m
-- int(m * ((k * A) % 1)) for 0 < A < 1
 """
 
 import connected_list as L
 
 class ChainedHash:
+  """ Chained Hash using connected-list
+  hash functions
+  - int(k * m) if 0 <= k <= 1
+  - k % m
+  - int(m * ((k * A) % 1)) for 0 < A < 1
+  """
   def __init__(self, h, size=10):
     self.T = []
     for i in range(size):
@@ -31,6 +33,8 @@ class ChainedHash:
     self.T[self.h(k)].delete(x)
 
 class DirectAdressing:
+  """ The simplest way: Direct Addressing (just use an array)
+  """
   def __init__(self, size=10):
     self.T = [None] * size
 
@@ -44,6 +48,13 @@ class DirectAdressing:
     self.T[k] = None
 
 class OpenAddressing:
+  """ Memorize all elements in a hash table
+  hash functions to generate [0, m-1]
+  - linear probing:    h(k, i) = (h'(k) + 1) % m
+  - quadratic probing: h(k, i) = (h'(k) + c1 * i + c2 * i**2) % m
+  - double hashing:    h(k, i) = (h1(k) + i * h2(k)) % m
+  double hashing is one of the best hash functions
+  """
   def __init__(self, h, size=10):
     self.T = [None] * size
     self.h = h
