@@ -43,6 +43,33 @@ class DirectAdressing:
   def delete(self, k):
     self.T[k] = None
 
+class OpenAddressing:
+  def __init__(self, h, size=10):
+    self.T = [None] * size
+    self.h = h
+
+  def search(self, k):
+    i = 0
+    m = len(self.T)
+    while True:
+      j = self.h(k, i)
+      if self.T[j] == k:
+        return j
+      i += 1
+      if T[j] == None or i == m: break
+
+  def insert(self, k):
+    i = 0
+    m = len(self.T)
+    while True:
+      j = self.h(k, i)
+      if self.T[j] == None:
+        T[j] = k
+        return j
+      else:
+        i += 1
+      if i == m: break
+
 if __name__ == '__main__':
   ch = ChainedHash(lambda k: k % 5, 5)
   for k in [10, 11, 12, 13, 20, 12, 32]:
