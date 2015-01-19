@@ -3,23 +3,29 @@ maximum heap
 - parent node is always greater than 2 children nodes
 """
 
-def left(i):
-  return 2 * i
+class MaxHeap:
+  def __init__(self, A):
+    self.A = A
+    self.size = len(A)
+    build_max_heap()
 
-def right(i):
-  return 2 * i + 1
+  def left(self, i):
+    return 2 * i
 
-def max_heapify(A, size, i):
-  l = left(i)
-  r = right(i)
+  def right(self, i):
+    return 2 * i + 1
 
-  largest = l if l < size and A[l] > A[i] else i
-  largest = r if r < size and A[r] > A[largest] else largest
-  if largest != i:
-    A[i], A[largest] = A[largest], A[i]
-    max_heapify(A, size, largest)
+  def max_heapify(i):
+    l = self.left(i)
+    r = self.right(i)
 
-def build_max_heap(A, size):
-  n = size / 2
-  for i in range(n-1,-1,-1):
-    max_heapify(A, size, i)
+    largest = l if l < self.size and self.A[l] > self.A[i] else i
+    largest = r if r < self.size and self.A[r] > self.A[largest] else largest
+    if largest != i:
+      self.A[i], self.A[largest] = self.A[largest], self.A[i]
+      self.max_heapify(largest)
+
+  def build_max_heap():
+    n = self.size / 2
+    for i in range(n-1,-1,-1):
+      self.max_heapify(i)
