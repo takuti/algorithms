@@ -28,7 +28,7 @@ def lcs_length(X, Y):
       else:
         c[i][j] = c[i][j-1]
         b[i-1][j-1] = 'l'
-  return c, b
+  return c[m][n], b
 
 def get_lcs(b, X, i, j):
   if i == 0 or j == 0:
