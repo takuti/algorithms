@@ -6,6 +6,8 @@ u: ↑
 l: ←
 """
 
+lcs = []
+
 def lcs_length(X, Y):
   m = len(X)
   n = len(Y)
@@ -28,20 +30,21 @@ def lcs_length(X, Y):
         b[i-1][j-1] = 'l'
   return c, b
 
-def print_lcs(b, X, i, j):
+def get_lcs(b, X, i, j):
   if i == 0 or j == 0:
     return
   if b[i-1][j-1] == 'd':
-    print_lcs(b, X, i-1, j-1)
-    print X[i-1]
+    get_lcs(b, X, i-1, j-1)
+    lcs.append(X[i-1])
   elif b[i-1][j-1] == 'u':
-    print_lcs(b, X, i-1, j)
+    get_lcs(b, X, i-1, j)
   else:
-    print_lcs(b, X, i, j-1)
+    get_lcs(b, X, i, j-1)
 
 if __name__ == '__main__':
   X = 'ABCBDAB'
   Y = 'BDCABA'
   c, b = lcs_length(X, Y)
-  print_lcs(b, X, len(X), len(Y))
+  get_lcs(b, X, len(X), len(Y))
+  print ''.join(lcs)
 
