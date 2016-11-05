@@ -5,14 +5,37 @@ import random
 
 
 def partition(A, p, r):
-    pivot = A[r]
-    i = p - 1
-    for j in range(p, r):
-        if A[j] <= pivot:
-            i += 1
-            A[i], A[j] = A[j], A[i]
-    A[i + 1], A[r] = A[r], A[i + 1]
-    return i + 1
+    # all left elements should be less than or equal to `pivot`
+    # all right elements should be greater than `pivot`
+    pivot = A[p]
+
+    k = p + 1
+    l = r
+
+    # A[k] should be left-most element which greater than pivot
+    while (A[k] <= pivot) and (k < r):
+        k += 1
+
+    # A[l] should be right-most element which less than or equal to pivot
+    while (A[l] > pivot):
+        l -= 1
+
+    while (k < l):
+        # swap left-most `> pivot` element and right-most `<= pivot` element
+        A[k], A[l] = A[l], A[k]
+
+        # find left-most again
+        while (A[k] <= pivot):
+            k += 1
+
+        # find right-most again
+        while (A[l] > pivot):
+            l -= 1
+
+    # last `<= pivot` element is swapped with pivot
+    A[p], A[l] = A[l], A[p]
+
+    return l
 
 
 def randomized_partition(A, p, r):
