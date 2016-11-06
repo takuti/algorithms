@@ -27,13 +27,13 @@ class Q:
         return res
 
 
-def bit(n, b_pos):
+def bits(n, b_pos, m):
     b = format(n, 'b')
 
-    if len(b) <= b_pos:
-        return '0'
+    if len(b) < (b_pos + m):
+        b = b.zfill(b_pos + m)
 
-    return b[-(b_pos + 1)]
+    return b[::-1][b_pos:(b_pos + m)]
 
 
 def partition(A, p, r, b_pos):
@@ -41,22 +41,22 @@ def partition(A, p, r, b_pos):
     l = r
 
     # A[k] should be left-most element b_pos-th element is 1
-    while (k < r) and (bit(A[k], b_pos) == '0'):
+    while (k < r) and (bits(A[k], b_pos, 1) == '0'):
         k += 1
 
     # A[l] should be right-most element b_pos-th element is 0
-    while (l > p) and (bit(A[l], b_pos) == '1'):
+    while (l > p) and (bits(A[l], b_pos, 1) == '1'):
         l -= 1
 
     while (k < l):
         A[k], A[l] = A[l], A[k]
 
         # find left-most again
-        while (bit(A[k], b_pos) == '0'):
+        while (bits(A[k], b_pos, 1) == '0'):
             k += 1
 
         # find right-most again
-        while (bit(A[l], b_pos) == '1'):
+        while (bits(A[l], b_pos, 1) == '1'):
             l -= 1
 
     return l
@@ -78,6 +78,45 @@ def sort_exchange(A, p, r, b_pos):
             q = partition(A, p, r, b_pos)
             queue.enqueue((p, q, b_pos))
             queue.enqueue((q + 1, r, b_pos))
+
+    return A
+
+
+def sort_straight(A, N, b):
+    """
+    >>> sort_straight([43, 2, 15, 81, 49, 4, 56, 11, 51, 97], 10, 32)
+    [2, 4, 11, 15, 43, 49, 51, 56, 81, 97]
+    """
+
+    # this should be small enough depending on minimum element
+    mbits = 1
+
+    # `mbits` bits per pass = 2^mbits possible patterns
+    M = 2 ** mbits
+
+    n_pass = int(b / mbits)
+    for ps in range(n_pass):
+        # count `ps`-th `mbits` bits of each element
+        # (index corresponds to its decimal repr.)
+        count = [0] * M
+        for i in range(N):
+            d_ps = int(bits(A[i], ps * mbits, mbits), 2)
+            count[d_ps] += 1
+
+        # Counting Sort:
+        # prefix sum on counts
+        # each element indicates the last index of sequence of `mbits` bits
+        count[0] -= 1  # decrement because index starts from 0
+        for j in range(1, M):
+            count[j] += count[j - 1]
+
+        # copy elements in A to tA
+        tA = [0] * N
+        for i in range(N - 1, -1, -1):
+            d_ps = int(bits(A[i], ps * mbits, mbits), 2)
+            tA[count[d_ps]] = A[i]
+            count[d_ps] -= 1
+        A, tA = tA, A
 
     return A
 
