@@ -27,33 +27,36 @@ class Q:
         return res
 
 
-def bit(v, n, b_pos):
-    return format(v, 'b').zfill(n)[b_pos]
+def bit(n, b_pos):
+    b = format(n, 'b')
+
+    if len(b) <= b_pos:
+        return '0'
+
+    return b[-(b_pos + 1)]
 
 
-def partition(A, p, r, b_pos, n=10):
+def partition(A, p, r, b_pos):
     k = p
     l = r
 
-    b_pos = n - b_pos
-
     # A[k] should be left-most element b_pos-th element is 1
-    while (k < r) and (bit(A[k], n, b_pos) == '0'):
+    while (k < r) and (bit(A[k], b_pos) == '0'):
         k += 1
 
     # A[l] should be right-most element b_pos-th element is 0
-    while (l > p) and (bit(A[l], n, b_pos) == '1'):
+    while (l > p) and (bit(A[l], b_pos) == '1'):
         l -= 1
 
     while (k < l):
         A[k], A[l] = A[l], A[k]
 
         # find left-most again
-        while (bit(A[k], n, b_pos) == '0'):
+        while (bit(A[k], b_pos) == '0'):
             k += 1
 
         # find right-most again
-        while (bit(A[l], n, b_pos) == '1'):
+        while (bit(A[l], b_pos) == '1'):
             l -= 1
 
     return l
@@ -61,7 +64,7 @@ def partition(A, p, r, b_pos, n=10):
 
 def sort_exchange(A, p, r, b_pos):
     """
-    >>> sort_exchange([43, 2, 15, 81, 49, 4, 56, 11, 51, 97], 0, 9, 10)
+    >>> sort_exchange([43, 2, 15, 81, 49, 4, 56, 11, 51, 97], 0, 9, 32)
     [2, 4, 11, 15, 43, 49, 51, 56, 81, 97]
     """
     queue = Q()
