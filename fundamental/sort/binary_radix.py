@@ -121,6 +121,46 @@ def sort_straight(A, N, b):
     return A
 
 
+def sort_straight_2(A, N, b):
+    """
+    >>> sort_straight_2([43, 2, 15, 81, 49, 4, 56, 11, 51, 97], 10, 32)
+    [2, 4, 11, 15, 43, 49, 51, 56, 81, 97]
+    """
+
+    # this should be small enough depending on minimum element
+    mbits = 1
+
+    # `mbits` bits per pass = 2^mbits possible patterns
+    M = 2 ** mbits
+
+    tA = [0] * N
+    n_pass = int(b / mbits)
+
+    for ps in range(n_pass):
+        bitsA = [int(bits(a, ps * mbits, mbits), 2) for a in A]
+
+        # (Strictly Iterative) Counting Sort
+        offset = -1
+        for j in range(M):
+            count = 0
+
+            for i in range(N):
+                if bitsA[i] == j:
+                    count += 1
+
+            rank = offset + count
+
+            for i in range(N - 1, -1, -1):
+                if bitsA[i] == j:
+                    tA[rank] = A[i]
+                    rank -= 1
+
+            offset += count
+        A, tA = tA, A
+
+    return A
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
