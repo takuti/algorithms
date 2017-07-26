@@ -7,24 +7,24 @@ def levenshtein(s1, s2):
     >>> levenshtein('あいうえお', 'かきくけこ')
     5
     """
-    l1, l2 = len(s1), len(s2)
+    n, m = len(s1), len(s2)
 
-    dp = [[0] * (l2 + 1) for _ in range(l1 + 1)]
+    dp = [[0] * (m + 1) for _ in range(n + 1)]
 
-    for i1 in range(l1 + 1):
-        dp[i1][0] = i1
+    for i in range(n + 1):
+        dp[i][0] = i
 
-    for i2 in range(l2 + 1):
-        dp[0][i2] = i2
+    for j in range(m + 1):
+        dp[0][j] = j
 
-    for i1 in range(1, l1 + 1):
-        for i2 in range(1, l2 + 1):
-            cost = 0 if s1[i1 - 1] == s2[i2 - 1] else 1
-            dp[i1][i2] = min(dp[i1 - 1][i2] + 1,         # insertion
-                             dp[i1][i2 - 1] + 1,         # deletion
-                             dp[i1 - 1][i2 - 1] + cost)  # replacement
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            cost = 0 if s1[i - 1] == s2[j - 1] else 1
+            dp[i][j] = min(dp[i - 1][j] + 1,         # insertion
+                           dp[i][j - 1] + 1,         # deletion
+                           dp[i - 1][j - 1] + cost)  # replacement
 
-    return dp[l1][l2]
+    return dp[n][m]
 
 
 if __name__ == '__main__':
