@@ -1,105 +1,114 @@
-""" binary-search-tree
+"""Binary-search-tree
 """
 
-class Node:
-  def __init__(self, k, l=None, r=None, p=None):
-    self.key = k
-    self.l = l
-    self.r = r
-    self.p = p
 
-class Tree:
-  def __init__(self):
-    self.root = None
+class Node(object):
 
-  def walk(self, x):
-    if x != None:
-      self.walk(x.l)
-      print x.key
-      self.walk(x.r)
+    def __init__(self, key, left=None, right=None, parent=None):
+        self.key = key
+        self.left = left
+        self.right = right
+        self.parent = parent
 
-  def insert(self, z):
-    y = None
-    x = self.root
-    while x != None:
-      y = x
-      x = x.l if z.key < x.key else x.r
-    z.p = y
-    if y == None:
-      self.root = z # z is the first node
-    elif z.key < y.key:
-      y.l = z
-    else:
-      y.r = z
 
-  def search(self, x, k):
-    while x != None and x.key != k:
-      x = x.l if k < x.key else x.r
-    return x
+class Tree(object):
 
-  def minimum(self, x):
-    while x.l != None:
-      x = x.l
-    return x
+    def __init__(self):
+        self.root = None
 
-  def maximum(self, x):
-    while x.r != None:
-      x = x.r
-    return x
+    def walk(self, x):
+        if x is not None:
+            self.walk(x.left)
+            print(x.key)
+            self.walk(x.right)
 
-  def successor(self, x):
-    """ return node which will be printed next to x in walk()
-    """
-    if x.r != None:
-      return self.minimum(x.r)
-    y = x.p
-    while y != None and x == y.r:
-      x = y
-      y = y.p
-    return y
+    def insert(self, z):
+        y = None
+        x = self.root
+        while x is not None:
+            y = x
+            x = x.left if z.key < x.key else x.right
+        z.parent = y
+        if y is None:
+            self.root = z  # z is the first node
+        elif z.key < y.key:
+            y.left = z
+        else:
+            y.right = z
 
-  def transplant(self, u, v):
-    """ replace root from u to v
-    """
-    if u.p == None:
-      self.root = v
-    elif u == u.p.l:
-      u.p.l = v
-    else:
-      u.p.r = v
-    if v != None:
-      v.p = u.p
+    def search(self, x, k):
+        while x is not None and x.key is not k:
+            x = x.left if k < x.key else x.right
+        return x
 
-  def delete(self, z):
-    if z.l == None:
-      self.transplant(z, z.r)
-    elif z.r == None:
-      self.transplant(z, z.l)
-    else:
-      y = self.minimum(z.r)
-      if y.p != z:
-        self.transplant(y, y.r)
-        y.r = z.r
-        y.r.p = y
-      self.transplant(z, y)
-      y.l = z.l
-      y.l.p = y
+    def minimum(self, x):
+        while x.left is not None:
+            x = x.left
+        return x
+
+    def maximum(self, x):
+        while x.right is not None:
+            x = x.right
+        return x
+
+    def successor(self, x):
+        """Return node which will be printed next to x in walk()
+        """
+        if x.right is not None:
+            return self.minimum(x.right)
+        y = x.parent
+        while y is not None and x == y.right:
+            x = y
+            y = y.parent
+        return y
+
+    def transplant(self, u, v):
+        """Replace root from u to v
+        """
+        if u.parent is None:
+            self.root = v
+        elif u == u.parent.left:
+            u.parent.left = v
+        else:
+            u.parent.right = v
+        if v is not None:
+            v.parent = u.parent
+
+    def delete(self, z):
+        if z.left is None:
+            self.transplant(z, z.right)
+        elif z.right is None:
+            self.transplant(z, z.left)
+        else:
+            y = self.minimum(z.right)
+            if y.parent != z:
+                self.transplant(y, y.right)
+                y.right = z.right
+                y.right.parent = y
+            self.transplant(z, y)
+            y.left = z.left
+            y.left.parent = y
+
 
 if __name__ == '__main__':
-  import random
-  T = Tree()
-  l = [random.randint(1, 100) for i in range(10)]
-  print l
-  for k in l:
-    T.insert(Node(k))
-  T.walk(T.root)
-  print '---'
-  x = T.successor(T.search(T.root, l[5]))
-  if x == None: print '%d is the last.' % l[5]
-  else: print 'next to %d is %d' % (l[5], x.key)
-  print '---'
-  for k in l:
-    T.delete(T.search(T.root, k))
-  T.walk(T.root)
+    import random
+    T = Tree()
+    lst = [random.randint(1, 100) for i in range(10)]
+    print(lst)
+    for k in lst:
+        T.insert(Node(k))
+    T.walk(T.root)
 
+    print('---')
 
+    x = T.successor(T.search(T.root, lst[5]))
+    if x is None:
+        print('%d is the last.' % lst[5])
+    else:
+        print('next to %d is %d' % (lst[5], x.key))
+
+    print('---')
+
+    for k in lst:
+        T.delete(T.search(T.root, k))
+    T.walk(T.root)
